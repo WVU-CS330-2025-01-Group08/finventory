@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
+  const nagivate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -14,6 +16,10 @@ function Login() {
     });
     const data = await response.json();
     setMessage(data.message);
+
+    if(data.redirectUrl) {
+      nagivate(data.redirectUrl);
+    }
   };
 
   return (

@@ -38,7 +38,11 @@ app.post('/login', (req, res) => {
       return res.status(500).json({ error: 'Database error' });
     }
     if (results.length > 0) {
-      res.json({ message: 'Authentication successful' });
+      res.json({ 
+        message: 'Authentication successful',
+        // Redirects to the home page
+        redirectUrl: '/home'
+      });
     } else {
       res.status(401).json({ message: 'Authentication failed' });
     }
