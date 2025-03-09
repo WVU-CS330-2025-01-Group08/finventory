@@ -1,53 +1,53 @@
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f9;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* header section */
+header {
+  background-color: #333;
+  height: 10%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+header img {
+  height: 100%;
+}
+
+header ul {
+  list-style: none;
   margin: 0;
   padding: 0;
-  color: #333;
+  display: flex;
+  align-items: center;
 }
 
-header {
-  background-color: #004d99;
-  color: white;
-  text-align: center;
-  padding: 20px 0;
+header li {
+  margin-right: 3em;
 }
 
-.container {
-  width: 80%;
-  margin: 0 auto;
-  text-align: center;
-}
-
-h1 {
-  margin-bottom: 0;
-}
-
-p {
-  font-size: 1.2rem;
-  margin-top: 10px;
-}
-
-.cta-button {
-  background-color: #0066cc;
+header li a {
+  text-decoration: none;
   color: white;
   padding: 10px 20px;
-  text-decoration: none;
-  font-size: 1.2rem;
-  border-radius: 5px;
-  margin-top: 20px;
-  display: inline-block;
+  background-color: rgb(9, 91, 154);
+  border: 1px solid rgb(9, 91, 154);
+  border-radius: 20px;
+  transition: background-color 0.3s ease;
+  font-size: 16px;
+  font-weight: bold;
 }
-
-.cta-button:hover {
-  background-color: #005bb5;
-}
-
-footer {
-  text-align: center;
-  padding: 10px;
-  background-color: #333;
-  color: white;
-}
-
 
