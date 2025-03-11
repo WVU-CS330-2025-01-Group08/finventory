@@ -1,20 +1,28 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 
-function Login() {
+function Signup() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
-  const navigate = useNavigate();
   const passwordInputRef = useRef(null);
+  const confirmPasswordInputRef = useRef(null);
 
-  const handleTogglePassword = () => {
-    const input = passwordInputRef.current;
-    input.type = input.type === 'password' ? 'text' : 'password';
-  };
+  function handleSubmit(e) {
+    e.preventDefault();
+    // Handle signup logic here
+  }
 
-  function handleSubmit(){
-    //Not yet created
+  function toggleBothPasswords() {
+    if (passwordInputRef.current) {
+      passwordInputRef.current.type =
+        passwordInputRef.current.type === 'password' ? 'text' : 'password';
+    }
+    if (confirmPasswordInputRef.current) {
+      confirmPasswordInputRef.current.type =
+        confirmPasswordInputRef.current.type === 'password' ? 'text' : 'password';
+    }
   }
 
   return (
@@ -43,16 +51,16 @@ function Login() {
         h3 {
           margin-bottom: 5px;
         }
-        .signup-link {
+        .login-link {
           font-size: 0.9em;
           margin-bottom: 15px;
         }
-        .signup-link a {
+        .login-link a {
           color: #0073e6;
           text-decoration: none;
           font-weight: bold;
         }
-        .signup-link a:hover {
+        .login-link a:hover {
           text-decoration: underline;
         }
         input[type="text"], input[type="password"] {
@@ -65,6 +73,11 @@ function Login() {
           font-size: 1em;
           box-sizing: border-box;
         }
+        .password-rules {
+          text-align: left;
+          font-size: 0.9em;
+          margin: 0 5% 10px 5%;
+        }
         .toggle-password {
           display: block;
           margin: 10px auto;
@@ -76,12 +89,12 @@ function Login() {
           padding: 10px;
         }
         button {
-          padding: 10px 20px;
+          padding: 10px;
           background: #dbe9ff;
           border: 1px solid #6b8eb9;
           border-radius: 5px;
           cursor: pointer;
-          margin-top: 15px;
+          margin-top: 10px;
           font-size: 1em;
         }
         button:hover {
@@ -115,11 +128,11 @@ function Login() {
         }
       `}</style>
 
-      <h1>Welcome to Finventory!</h1>
+      <h1>Getting Started</h1>
       <div className="container">
-        <h3>Login to Your Account</h3>
-        <div className="signup-link">
-          New? <Link to="/Signup">Sign up here!</Link>
+        <h3>Make Your Account</h3>
+        <div className="login-link">
+          Already have an account? <Link to="/login">Login Here</Link>
         </div>
         <form onSubmit={handleSubmit}>
           <input
@@ -131,31 +144,46 @@ function Login() {
           />
           <input
             type="password"
-            id="password"
-            ref={passwordInputRef}
             placeholder="Password"
+            ref={passwordInputRef}
             value={password}
             required
             onChange={(e) => setPassword(e.target.value)}
           />
+          <div className="password-rules">
+            Password must include:
+            <br />- at least 8 characters
+            <br />- one number
+            <br />- one special character
+          </div>
+          <input
+            type="password"
+            placeholder="Confirm Password"
+            ref={confirmPasswordInputRef}
+            value={confirmPassword}
+            required
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
           <button
             type="button"
             className="toggle-password"
-            onClick={handleTogglePassword}
+            onClick={toggleBothPasswords}
           >
-            Show Password
+            Show Passwords
           </button>
-          <button type="submit">Login</button>
+          <button type="submit">
+            Create Account
+          </button>
         </form>
       </div>
       <div className="background">
         <div className="wave"></div>
         <img src="/fishCartoon.png" alt="Fish" className="fish" />
-        <img src="/fishCartoon.png" alt="Fish" className="fish-small" />
+        <img src="/fishCartoon.png" alt="Fish small" className="fish-small" />
       </div>
       {message && <p style={{ textAlign: 'center' }}>{message}</p>}
     </div>
   );
 }
 
-export default Login;
+export default Signup;
