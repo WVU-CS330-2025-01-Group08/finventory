@@ -5,26 +5,31 @@ import './index.css'
 function Home() {
   return (
     <>
-        <header>
-          <h1>Finventory</h1>
-          <ul>
-              <li><Link to="/fishing-regulation">Fishing Regulation</Link></li>
-              <li><Link to="/resources">Resources</Link></li>
-              <li><Link to="/news">News and Updates</Link></li>
-              <li><Link to="/account">Account</Link></li>
-              <li><Link to="/contact">Contact</Link></li>
-          </ul>
-        </header>
+      <header>
+        <ul>
+            <li><Link to="/fishing-regulation">Fishing Regulation</Link></li>
+            <li><Link to="/resources">Resources</Link></li>
+            <li><Link to="/news">News and Updates</Link></li>
+            <li><Link to="/account">Account</Link></li>
+            <li><Link to="/contact">Contact</Link></li>
+        </ul>
+      </header>
 
-        <div class = "title">
-            <h1>Welcome to Finventory!</h1>
-            <p>Your go-to platform for tracking trout stocking across West Virginia's rivers and streams.</p>
-        </div>
+      <h1>Welcome to Finventory</h1>
+      <div className="container">
+        <p>Track trout stocking across West Virginia with ease.</p>
+        <Link to="/begin" className="button">Click to Begin</Link>
+      </div>
+      <div className="background">
+        <div className="wave"></div>
+        <img src="/fishCartoon.png" alt="Fish" className="fish" />
+        <img src="/fishCartoon.png" alt="Fish small" className="fish-small" />
+      </div>
 
 
-        <footer>
-            <p>&copy; 2025 Finventory. All rights reserved.</p>
-        </footer>
+      <footer>
+          <p>&copy; 2025 Finventory. All rights reserved.</p>
+      </footer>
           
     </>
   );
