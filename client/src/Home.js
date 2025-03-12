@@ -1,17 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './index.css'
+import './Home.css'
 
 function Home() {
   return (
     <>
       <header>
         <ul>
-            <li><Link to="/fishing-regulation">Fishing Regulation</Link></li>
-            <li><Link to="/resources">Resources</Link></li>
+            <li><Link to="/home">Home</Link></li>
+            <li><Link to="/resources">Favorites</Link></li>
             <li><Link to="/news">News and Updates</Link></li>
             <li><Link to="/account">Account</Link></li>
-            <li><Link to="/contact">Contact</Link></li>
         </ul>
       </header>
 
