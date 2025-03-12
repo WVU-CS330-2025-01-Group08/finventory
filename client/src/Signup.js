@@ -8,13 +8,33 @@ function Signup() {
   const [message, setMessage] = useState('');
   const passwordInputRef = useRef(null);
   const confirmPasswordInputRef = useRef(null);
+  const navigate = useNavigate();
 
-  function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle signup logic here
-  }
+    if (password !== confirmPassword) {
+      setMessage('Passwords do not match');
+      return;
+    }
 
-  function toggleBothPasswords() {
+    const response = await fetch('http://localhost:3000/Signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username, password }),
+    });
+
+    if (response.ok) {
+      setMessage('User registered successfully');
+      navigate('/login');
+    } else {
+      const data = await response.json();
+      setMessage(data.error || 'Registration failed');
+    }
+  };
+
+  const toggleBothPasswords = () => {
     if (passwordInputRef.current) {
       passwordInputRef.current.type =
         passwordInputRef.current.type === 'password' ? 'text' : 'password';
@@ -23,7 +43,7 @@ function Signup() {
       confirmPasswordInputRef.current.type =
         confirmPasswordInputRef.current.type === 'password' ? 'text' : 'password';
     }
-  }
+  };
 
   return (
     <div>

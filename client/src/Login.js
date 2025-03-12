@@ -13,9 +13,27 @@ function Login() {
     input.type = input.type === 'password' ? 'text' : 'password';
   };
 
-  function handleSubmit(){
-    //Not yet created
-  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const response = await fetch('http://localhost:3000/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username, password }),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      setMessage(data.message);
+      if (data.redirectUrl) {
+        navigate(data.redirectUrl);
+      }
+    } else {
+      const data = await response.json();
+      setMessage(data.message || 'Login failed');
+    }
+  };
 
   return (
     <div>

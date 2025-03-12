@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const mysql = require('mysql2');
+const bcrypt = require('bcrypt');
 const app = express();
 const cors = require('cors');
 
@@ -10,15 +11,16 @@ app.use(
     origin: "http://localhost:3001", // Allow only frontend
     methods: "GET,POST",
     allowedHeaders: "Content-Type",
-  }
-));
+  })
+);
+
 // Create a connection to the database
 const db = mysql.createConnection({
-  host: process.env.DB_HOST,      // e.g., 'localhost'
-  user: process.env.DB_USER,      // e.g., 'root'
-  password: process.env.DB_PASSWORD, // e.g., 'my-secret-pw'
-  database: process.env.DB_NAME,  // e.g., 'authdb'
-  port: process.env.DB_PORT       // e.g., '3306'
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  port: process.env.DB_PORT
 });
 
 db.connect(err => {
@@ -29,20 +31,73 @@ db.connect(err => {
   }
 });
 
-// Basic authentication route
-app.post('/login', (req, res) => {
+// User registration route
+app.post('/signup', async (req, res) => {
   const { username, password } = req.body;
-  // In production, use hashed passwords and secure verification!
-  db.query('SELECT * FROM users WHERE username = ? AND password = ?', [username, password], (err, results) => {
+
+  // Validate username to be alphanumeric
+  const alphanumericRegex = /^[a-z0-9]+$/i;
+  if (!alphanumericRegex.test(username)) {
+    return res.status(400).json({ message: 'Username must be alphanumeric' });
+  }
+
+  // Validate password to contain only alphanumeric characters and allowed special characters
+  const passwordRegex = /^[a-zA-Z0-9!@#$%^&*()_+=-]+$/;
+  if (!passwordRegex.test(password)) {
+    return res.status(400).json({ message: 'Password contains invalid characters' });
+  }
+
+  // Check if the username already exists
+  db.query('SELECT * FROM users WHERE username = ?', [username], async (err, results) => {
     if (err) {
       return res.status(500).json({ error: 'Database error' });
     }
     if (results.length > 0) {
-      res.json({ 
-        message: 'Authentication successful',
-        // Redirects to the home page
-        redirectUrl: '/home'
-      });
+      return res.status(400).json({ message: 'Username already exists' });
+    }
+
+    // If username does not exist, proceed with registration
+    const hashedPassword = await bcrypt.hash(password, 10);
+    db.query('INSERT INTO users (username, password) VALUES (?, ?)', [username, hashedPassword], (err, results) => {
+      if (err) {
+        return res.status(500).json({ error: 'Database error' });
+      }
+      res.json({ message: 'User registered successfully' });
+    });
+  });
+});
+
+// Basic authentication route
+app.post('/login', (req, res) => {
+  const { username, password } = req.body;
+
+  // Validate username to be alphanumeric
+  const alphanumericRegex = /^[a-z0-9]+$/i;
+  if (!alphanumericRegex.test(username)) {
+    return res.status(400).json({ message: 'Username must be alphanumeric' });
+  }
+
+  // Validate password to contain only alphanumeric characters and allowed special characters
+  const passwordRegex = /^[a-zA-Z0-9!@#$%^&*()_+=-]+$/;
+  if (!passwordRegex.test(password)) {
+    return res.status(400).json({ message: 'Password contains invalid characters' });
+  }
+
+  db.query('SELECT * FROM users WHERE username = ?', [username], async (err, results) => {
+    if (err) {
+      return res.status(500).json({ error: 'Database error' });
+    }
+    if (results.length > 0) {
+      const user = results[0];
+      const match = await bcrypt.compare(password, user.password);
+      if (match) {
+        res.json({ 
+          message: 'Authentication successful',
+          redirectUrl: '/home'
+        });
+      } else {
+        res.status(401).json({ message: 'Authentication failed' });
+      }
     } else {
       res.status(401).json({ message: 'Authentication failed' });
     }
