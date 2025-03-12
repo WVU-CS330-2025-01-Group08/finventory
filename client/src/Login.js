@@ -1,7 +1,10 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useAuth } from './AuthContext';
+
 
 function Login() {
+  const {login} = useAuth();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
@@ -25,10 +28,10 @@ function Login() {
 
     if (response.ok) {
       const data = await response.json();
+      login();
       setMessage(data.message);
-      if (data.redirectUrl) {
-        navigate(data.redirectUrl);
-      }
+      navigate(data.redirectUrl);
+      
     } else {
       const data = await response.json();
       setMessage(data.message || 'Login failed');
