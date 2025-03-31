@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Home.css'
-import Map from './Map.js';
+import { WVMap as Map } from './Map.js';
 
 function Home() {
   return (
