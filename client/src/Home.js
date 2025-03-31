@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Home.css'
+import Map from './Map.js';
 
 function Home() {
   return (
@@ -17,7 +18,7 @@ function Home() {
       <h1>Welcome to Finventory</h1>
       <div className="container">
         <p>Track trout stocking across West Virginia with ease.</p>
-        <Link to="/begin" className="button">Click to Begin</Link>
+        <Map />
       </div>
       <div className="background">
         <div className="wave"></div>
