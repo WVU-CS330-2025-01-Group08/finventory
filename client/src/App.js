@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './Login';
 import Home from './Home';
 import Signup from './Signup';
+import Account from './Account';
 import ProtectedRoute from './ProtectedRoute';
 import { AuthProvider } from './AuthContext';
 
@@ -19,6 +20,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <Home />
+                </ProtectedRoute>
+              } 
+              />
+            <Route 
+              path="/account" 
+              element={
+                <ProtectedRoute>
+                  <Account />
                 </ProtectedRoute>
               } 
               />
