@@ -4,7 +4,7 @@ const mysql = require('mysql2');
 const bcrypt = require('bcrypt');
 const app = express();
 const cors = require('cors');
-
+const layersRouter = require('./routes/layers');
 app.use(express.json());
 app.use(
   cors({
@@ -13,6 +13,7 @@ app.use(
     allowedHeaders: "Content-Type",
   })
 );
+app.use('/layers', layersRouter);
 
 // Create a connection to the database
 const db = mysql.createConnection({
