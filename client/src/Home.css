@@ -113,3 +113,52 @@ header {
       height: 300px;
     }
   }
+  
+  .stream-popup p {
+    margin: 4px 0;
+  }
+
+  .county-label {
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    white-space: nowrap;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    pointer-events: none; /* This makes the labels non-interactive */
+  }
+  
+  /* Hide labels on mobile */
+  @media (max-width: 768px) {
+    .county-label-container {
+      display: none !important;
+    }
+  }
+  .map-controls {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+  
+  .control-item {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .control-item input {
+    margin-right: 5px;
+  }
+  
+  .stream-popup h3 {
+    margin: 0 0 8px 0;
+    color: #0056b3;
+  }
+  
+  .stream-popup p {
+    margin: 4px 0;
+  }

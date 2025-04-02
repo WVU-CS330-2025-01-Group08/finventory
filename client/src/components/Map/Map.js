@@ -3,6 +3,7 @@ import { MapContainer, TileLayer, useMap, GeoJSON } from 'react-leaflet';
 import * as L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import CountyLayer from './CountyLayer';
+import TroutStreamsLayer from './TroutStreamsLayer';
 
 // Fix Leaflet icon issues
 delete L.Icon.Default.prototype._getIconUrl;
@@ -42,8 +43,30 @@ function MapBoundaries() {
 }
 
 function WVMap() {
+  const [showTroutStreams, setShowTroutStreams] = useState(false);
+  const [showCounties, setShowCounties] = useState(true); // Default to true
+  
   return (
     <div className="map-container">
+      <div className="map-controls">
+        <label className="control-item">
+          <input 
+            type="checkbox" 
+            checked={showCounties} 
+            onChange={() => setShowCounties(!showCounties)}
+          />
+          Show Counties
+        </label>
+        <label className="control-item">
+          <input 
+            type="checkbox" 
+            checked={showTroutStreams} 
+            onChange={() => setShowTroutStreams(!showTroutStreams)}
+          />
+          Show Trout Streams
+        </label>
+      </div>
+      
       <MapContainer 
         style={{ height: '400px', width: '100%', borderRadius: '8px' }}
         center={[39.0, -80.25]}
@@ -59,8 +82,9 @@ function WVMap() {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <CountyLayer />
+        {showCounties && <CountyLayer />}
         <MapBoundaries />
+        {showTroutStreams && <TroutStreamsLayer />}
       </MapContainer>
     </div>
   );
