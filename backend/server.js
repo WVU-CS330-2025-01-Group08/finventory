@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const bcrypt = require('bcrypt');
+const compression = require('compression');
 const app = express();
 const cors = require('cors');
 const layersRouter = require('./routes/layers');
@@ -15,6 +16,7 @@ app.use(
     allowedHeaders: "Content-Type",
   })
 );
+app.use(compression()); // Enable compression for all routes
 app.use('/layers', layersRouter);
 
 // User registration route
