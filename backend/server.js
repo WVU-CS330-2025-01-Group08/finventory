@@ -46,12 +46,6 @@ app.post('/signup', async (req, res) => {
 // Basic authentication route
 app.post('/login', async (req, res) => {
   const { username, password } = req.body;
-
-  const passwordError = validatePassword(password);
-  if (passwordError) {
-    return res.status(400).json({ message: passwordError });
-  }
-
   try {
     const user = await db.authenticateUser(username, password);
     if (!user) {
