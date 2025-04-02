@@ -24,8 +24,8 @@ app.post('/signup', async (req, res) => {
   const { username, password } = req.body;
 
   const passwordError = validatePassword(password);
-  if (passwordError) {
-    return res.status(400).json({ message: passwordError });
+  if (!passwordError) {
+    return res.status(400).json({ message: 'password error:' + passwordError });
   }
 
   try {
