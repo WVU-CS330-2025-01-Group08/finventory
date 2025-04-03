@@ -37,7 +37,7 @@ app.post('/signup', async (req, res) => {
     await db.createUser(username, hashedPassword);
     res.json({ message: 'User registered successfully', redirectUrl: '/login' });
   } catch (error) {
-    res.status(500).json({ error: 'Database error' });
+    res.status(500).json({ error: 'Database error: ' + error });
   }
 });
 
@@ -51,7 +51,7 @@ app.post('/login', async (req, res) => {
     const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
     res.json({ message: 'Login successful', token, redirectUrl: '/home' });
   } catch (error) {
-    res.status(500).json({ error: 'Database error' });
+    res.status(500).json({ error: 'Database error: ' + error });
   }
 });
 
@@ -68,13 +68,14 @@ app.get('/profile', async (req, res) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const user = await db.getUserById(decoded.userId);
     if (!user) {
-      return res.status(404).json({ error: 'User not found' });
+      return res.status(404).json({ error: 'User not found: ' + error });
     }
     res.json({ username: user.username });
   } catch (error) {
-    res.status(401).json({ error: 'Not authorized' });
+    res.status(401).json({ error: 'Not authorized: ' + error });
   }
 });
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {});
+console.log(`Server is running on port ${PORT}`);
