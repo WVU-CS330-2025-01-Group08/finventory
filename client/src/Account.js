@@ -1,8 +1,40 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import "./Account.css"; 
+import "./Account.css";
 
 function Account() {
+  const [profile, setProfile] = useState({ username: '' });
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    async function fetchProfile() {
+      const token = localStorage.getItem('token');
+  
+      try {
+        const response = await fetch('http://localhost:3000/profile', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          },
+        });
+  
+        if (response.ok) {
+          const data = await response.json();
+          setProfile(data);
+        } else {
+          const errorData = await response.json();
+          setError(errorData.error || 'Failed to fetch profile data');
+        }
+      } catch (err) {
+        setError('Error fetching profile data');
+        console.error(err);
+      }
+    }
+  
+    fetchProfile();
+  }, []);
+  
   return (
     <>
       <header>
@@ -31,10 +63,10 @@ function Account() {
             <div className="profile-section">
               <img src="/profilePlaceholder.png" alt="Profile" className="profile-image" />
               <div className="profile-info">
-                <p><strong>Name:</strong> John Doe</p>
-                <p><strong>Email:</strong> johndoe@example.com</p>
+                <p><strong>Username:</strong> {profile.username || "Loading..."}</p>
               </div>
             </div>
+            {error && <p style={{ color: 'red' }}>{error}</p>}
           </div>
         </div>
       </div>

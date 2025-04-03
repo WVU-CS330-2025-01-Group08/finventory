@@ -62,9 +62,21 @@ async function getUserByUsername(username) {
     }
 }
 
+async function getUserById(id) {
+    const connection = await getConnection();
+    try {
+      const [rows] = await connection.execute('SELECT * FROM users WHERE id = ?', [id]);
+      return rows[0];
+    } finally {
+      connection.release();
+    }
+  }
+  
+
 module.exports = {
     getConnection,
     getUserByUsername,
     createUser,
     authenticateUser,
+    getUserById,
 };
