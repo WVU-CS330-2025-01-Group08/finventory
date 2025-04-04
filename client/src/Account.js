@@ -61,7 +61,6 @@ function Account() {
           <div className="account-main">
             <h2>Profile</h2>
             <div className="profile-section">
-              <img src="/profilePlaceholder.png" alt="Profile" className="profile-image" />
               <div className="profile-info">
                 <p><strong>Username:</strong> {profile.username || "Loading..."}</p>
               </div>
