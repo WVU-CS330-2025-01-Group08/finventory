@@ -7,6 +7,10 @@ function Home() {
   return (
     <>
       <header>
+            <Link to="/" className="logo">
+              <img src="/fishCartoon.png" alt="Logo" className="logo" />
+              Finventory
+            </Link>
         <ul>
             <li><Link to="/home">Home</Link></li>
             <li><Link to="/resources">Favorites</Link></li>
@@ -15,20 +19,15 @@ function Home() {
         </ul>
       </header>
 
-      <h1>Welcome to Finventory</h1>
       <div className="container">
-        <p>Track trout stocking across West Virginia with ease.</p>
+        
         <Map />
-      </div>
-      <div className="background">
-        <div className="wave"></div>
-        <img src="/fishCartoon.png" alt="Fish" className="fish" />
-        <img src="/fishCartoon.png" alt="Fish small" className="fish-small" />
+        
       </div>
 
 
       <footer>
-          <p>&copy; 2025 Finventory. All rights reserved.</p>
+          <p className="footer-bottom">&copy; 2025 Finventory. All Rights Reserved.</p>
       </footer>
           
     </>

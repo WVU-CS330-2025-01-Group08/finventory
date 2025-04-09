@@ -4,6 +4,7 @@ import Login from './Login';
 import Home from './Home';
 import Signup from './Signup';
 import Account from './Account';
+import Fish from './components/Map/Fish';
 import ProtectedRoute from './ProtectedRoute';
 import { AuthProvider } from './AuthContext';
 
@@ -12,6 +13,7 @@ function App() {
     <AuthProvider>
       <BrowserRouter>
         <div className="App">
+          <Fish />
           <Routes>
             <Route path="/" element={<Navigate to="/login" />} />
             <Route path="/login" element={<Login />} />

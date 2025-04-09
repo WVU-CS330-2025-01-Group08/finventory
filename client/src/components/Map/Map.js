@@ -68,7 +68,6 @@ function WVMap() {
       </div>
       
       <MapContainer 
-        style={{ height: '400px', width: '100%', borderRadius: '8px' }}
         center={[39.0, -80.25]}
         zoom={7}
         scrollWheelZoom={true}

@@ -1,0 +1,43 @@
+.global-fish-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  
+  .swimming-fish {
+    position: absolute;
+    width: 70px;
+    height: 40px;
+    pointer-events: none;
+    z-index: 0;
+    will-change: transform, left, top;
+    transform: translate3d(0, 0, 0); /* Hardware acceleration */
+  }
+  
+  .swimming-fish img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  
+  /* Simplified animation for better performance */
+  @keyframes fishSwim {
+    0% { transform: translateX(0); }
+    50% { transform: translateX(4px); }
+    100% { transform: translateX(0); }
+  }
+  
+  .swimming-fish img {
+    animation: fishSwim 4s infinite ease-in-out;
+  }
+  
+  /* Ensure other elements stay above fish */
+  header, .container, .map-container, .leaflet-container {
+    position: relative;
+    z-index: 1;
+  }
