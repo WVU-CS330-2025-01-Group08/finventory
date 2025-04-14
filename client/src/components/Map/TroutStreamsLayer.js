@@ -1,11 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { GeoJSON, useMap } from 'react-leaflet';
-import * as L from 'leaflet';
 
-function TroutStreamsLayer() {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+function TroutStreamsLayer({ data }) {
   const map = useMap();
 
   // Style by regulation type
@@ -35,29 +31,7 @@ function TroutStreamsLayer() {
     }
   };
 
-  useEffect(() => {
-    fetch('http://localhost:3000/layers/trout-streams')
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setData(data);
-        console.log('Trout stream data received:', data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        setError(err);
-        setLoading(false);
-      });
-  }, []);
-
-  if (loading) return <p>Loading trout streams...</p>;
-  if (error) return <p>Error: {error.message}</p>;
-
-  return data ? (
+  return (
     <GeoJSON
       data={data}
       style={getStyle}
@@ -91,7 +65,7 @@ function TroutStreamsLayer() {
         });
       }}
     />
-  ) : null;
+  );
 }
 
 export default TroutStreamsLayer;

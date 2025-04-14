@@ -45,6 +45,58 @@ function MapBoundaries() {
 function WVMap() {
   const [showTroutStreams, setShowTroutStreams] = useState(false);
   const [showCounties, setShowCounties] = useState(true); // Default to true
+
+  // Add state for cached data
+  const [countiesData, setCountiesData] = useState(null);
+  const [troutStreamsData, setTroutStreamsData] = useState(null);
+  
+  // Track loading state
+  const [loading, setLoading] = useState({
+    counties: false,
+    troutStreams: false
+  });
+  
+  // Fetch county data if not already cached
+  useEffect(() => {
+    if (showCounties && !countiesData) {
+      setLoading(prev => ({ ...prev, counties: true }));
+      
+      fetch('http://localhost:3000/layers/counties')
+        .then(response => {
+          if (!response.ok) throw new Error('Failed to fetch counties');
+          return response.json();
+        })
+        .then(data => {
+          setCountiesData(data);
+          setLoading(prev => ({ ...prev, counties: false }));
+        })
+        .catch(error => {
+          console.error('Error fetching counties:', error);
+          setLoading(prev => ({ ...prev, counties: false }));
+        });
+    }
+  }, [showCounties, countiesData]);
+  
+  // Fetch trout streams data if not already cached
+  useEffect(() => {
+    if (showTroutStreams && !troutStreamsData) {
+      setLoading(prev => ({ ...prev, troutStreams: true }));
+      
+      fetch('http://localhost:3000/layers/trout-streams')
+        .then(response => {
+          if (!response.ok) throw new Error('Failed to fetch trout streams');
+          return response.json();
+        })
+        .then(data => {
+          setTroutStreamsData(data);
+          setLoading(prev => ({ ...prev, troutStreams: false }));
+        })
+        .catch(error => {
+          console.error('Error fetching trout streams:', error);
+          setLoading(prev => ({ ...prev, troutStreams: false }));
+        });
+    }
+  }, [showTroutStreams, troutStreamsData]);
   
   return (
     <div className="map-container">
@@ -56,6 +108,7 @@ function WVMap() {
             onChange={() => setShowCounties(!showCounties)}
           />
           Show Counties
+          {loading.counties && <span style={{ marginLeft: '5px', fontSize: '0.8em' }}>Loading...</span>}
         </label>
         <label className="control-item">
           <input 
@@ -64,6 +117,7 @@ function WVMap() {
             onChange={() => setShowTroutStreams(!showTroutStreams)}
           />
           Show Trout Streams
+          {loading.troutStreams && <span style={{ marginLeft: '5px', fontSize: '0.8em' }}>Loading...</span>}
         </label>
       </div>
       
@@ -81,9 +135,9 @@ function WVMap() {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {showCounties && <CountyLayer />}
+        {showCounties && countiesData && <CountyLayer data={countiesData} />}
         <MapBoundaries />
-        {showTroutStreams && <TroutStreamsLayer />}
+        {showTroutStreams && troutStreamsData && <TroutStreamsLayer data={troutStreamsData} />}
       </MapContainer>
     </div>
   );
