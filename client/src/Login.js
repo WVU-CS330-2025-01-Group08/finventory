@@ -1,3 +1,28 @@
+
+/**
+ * Login component for the Finventory application.
+ * 
+ * This component provides a login form for users to authenticate themselves.
+ * It includes fields for username and password, a toggle to show/hide the password,
+ * and a link to the signup page for new users. Upon successful login, the user
+ * is redirected to a specified URL.
+ * 
+ * @component
+ * 
+ * @returns {JSX.Element} The rendered Login component.
+ * 
+ * @example
+ * // Usage in a React application
+ * import Login from './Login';
+ * 
+ * function App() {
+ *   return <Login />;
+ * }
+ * 
+ * @requires react
+ * @requires react-router-dom
+ * @requires ./AuthContext
+ */
 import React, { useState, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from './AuthContext';
@@ -26,6 +51,8 @@ function Login() {
       body: JSON.stringify({ username, password }),
     });
 
+    // Check if the response is ok (status in the range 200-299)
+    // If not, handle the error accordingly
     if (response.ok) {
       const data = await response.json();
       login();
@@ -37,7 +64,7 @@ function Login() {
       setMessage(data.message || 'Login failed');
     }
   };
-
+//Styling for the login page
   return (
     <div>
       <style>{`
