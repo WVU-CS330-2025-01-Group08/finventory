@@ -1,22 +1,44 @@
+// Import necessary React and routing utilities
 import React, { useState, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 
+/*
+  Component: Signup
+  Description:
+    This component renders a user registration form that collects a username and password.
+    It includes password validation, client-side matching confirmation, and visual toggling
+    between password visibility states. Upon successful registration, it redirects to the login page.
+*/
 function Signup() {
+  // State variables for form inputs and messages
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
+
+  // Refs to toggle visibility of password inputs
   const passwordInputRef = useRef(null);
   const confirmPasswordInputRef = useRef(null);
+
+  // Hook to programmatically navigate after successful signup
   const navigate = useNavigate();
 
+  /*
+    Function: handleSubmit
+    Description:
+      Handles form submission. It checks if passwords match and sends a POST request
+      to the backend to register the user. Displays appropriate success or error messages.
+  */
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Check if password and confirm password match
     if (password !== confirmPassword) {
       setMessage('Passwords do not match');
       return;
     }
 
+    // Send POST request to backend API
     const response = await fetch('http://localhost:3000/Signup', {
       method: 'POST',
       headers: {
@@ -25,15 +47,22 @@ function Signup() {
       body: JSON.stringify({ username, password }),
     });
 
+    // Handle response
     if (response.ok) {
       setMessage('User registered successfully');
-      navigate('/login');
+      navigate('/login'); // Redirect to login page
     } else {
       const data = await response.json();
       setMessage(data.error || 'Registration failed');
     }
   };
 
+  /*
+    Function: toggleBothPasswords
+    Description:
+      Toggles the visibility of both password input fields (password and confirm password).
+      Switches input type between "password" and "text".
+  */
   const toggleBothPasswords = () => {
     if (passwordInputRef.current) {
       passwordInputRef.current.type =
@@ -47,6 +76,7 @@ function Signup() {
 
   return (
     <div>
+      {/* Inline CSS styles for the Signup page */}
       <style>{`
         body {
           margin: 0;
@@ -148,12 +178,17 @@ function Signup() {
         }
       `}</style>
 
+      {/* Main heading */}
       <h1>Getting Started</h1>
+
+      {/* Signup form container */}
       <div className="container">
         <h3>Make Your Account</h3>
         <div className="login-link">
           Already have an account? <Link to="/login">Login Here</Link>
         </div>
+
+        {/* Signup form */}
         <form onSubmit={handleSubmit}>
           <input
             type="text"
@@ -196,14 +231,19 @@ function Signup() {
           </button>
         </form>
       </div>
+
+      {/* Decorative background with fish and wave art */}
       <div className="background">
         <div className="wave"></div>
         <img src="/fishCartoon.png" alt="Fish" className="fish" />
         <img src="/fishCartoon.png" alt="Fish small" className="fish-small" />
       </div>
+
+      {/* Display feedback messages (success or error) */}
       {message && <p style={{ textAlign: 'center' }}>{message}</p>}
     </div>
   );
 }
 
+// Export the Signup component so it can be used in routing
 export default Signup;
