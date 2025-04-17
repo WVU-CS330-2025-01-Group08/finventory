@@ -6,11 +6,13 @@ function Account() {
   return (
     <>
       <header>
+            <Link to="/" className="logo">
+                <img src="/fishCartoon.png" alt="Logo" className="logo" />
+                Finventory
+                </Link>
         <ul>
-          <li><Link to="/home">Home</Link></li>
-          <li><Link to="/resources">Favorites</Link></li>
-          <li><Link to="/news">News and Updates</Link></li>
-          <li><Link to="/account">Account</Link></li>
+            <li><Link to="/home">Map</Link></li>
+            <li><Link to="/account">Account</Link></li>
         </ul>
       </header>
 
