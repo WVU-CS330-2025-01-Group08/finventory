@@ -122,18 +122,18 @@
 }
 
 .btn-primary {
-  align-self: flex-start;
+  display: inline-block;
   padding: 0.5rem 1rem;
-  background: var(--primary);
+  background-color: #003366;
   color: white;
-  border: none;
-  border-radius: 0.5rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background-color 0.2s ease;
 }
 
 .btn-primary:hover {
-  background: var(--accent);
+  background-color: #002244;
 }
 
 /* —— favorites list —— */
