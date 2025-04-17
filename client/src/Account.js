@@ -78,8 +78,7 @@ function Account() {
                 alt="Profile"
                 className="profile-image"
               />
-              <p className="profile-name">{user.name}</p>
-
+              
               <input
                 type="file"
                 id="avatarInput"
@@ -90,6 +89,8 @@ function Account() {
               <label htmlFor="avatarInput" className="upload-btn">
                 Choose Photo
               </label>
+
+              <h2 className="profile-name">{user.name}</h2>
             </div>
           </aside>
 
