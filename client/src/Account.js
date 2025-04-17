@@ -153,7 +153,7 @@ function Account() {
       </div>
 
       <footer>
-        <p>&copy; 2025 Finventory. All rights reserved.</p>
+          <p className="footer-bottom">&copy; 2025 Finventory. All Rights Reserved.</p>
       </footer>
     </>
   );
