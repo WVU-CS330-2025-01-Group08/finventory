@@ -13,6 +13,7 @@
 }
 
 .account-sidebar {
+  height: 700px;
   width: 200px;
   background: #89b4e8;
   padding: 20px;
@@ -60,8 +61,8 @@
 }
 
 .profile-image {
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   object-fit: cover;
   margin-bottom: 0.75rem;

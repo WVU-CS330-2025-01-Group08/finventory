@@ -74,7 +74,7 @@ function Account() {
           <aside className="account-sidebar">
             <div className="profile-image-section">
               <img
-                src="profilePictureIcon.jpeg"
+                src="ProfilePictureIcon.png"
                 alt="Profile"
                 className="profile-image"
               />
