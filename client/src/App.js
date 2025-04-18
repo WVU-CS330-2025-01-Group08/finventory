@@ -54,7 +54,7 @@ function App() {
                 </ProtectedRoute>
               } 
               />
-            <Route path="/Signup" element={<Signup />} />
+            <Route path="/signup" element={<Signup />} />
           </Routes>
         </div>
       </BrowserRouter>

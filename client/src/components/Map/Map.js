@@ -5,6 +5,7 @@ import 'leaflet/dist/leaflet.css';
 import CountyLayer from './CountyLayer';
 import TroutStreamsLayer from './TroutStreamsLayer';
 
+const dotenv = require('dotenv').config({path: '.env'});
 // Fix Leaflet icon issues
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -61,7 +62,7 @@ function WVMap() {
     if (showCounties && !countiesData) {
       setLoading(prev => ({ ...prev, counties: true }));
       
-      fetch('http://localhost:3000/layers/counties')
+      fetch(process.env.REACT_APP_BACKEND_URL + '/layers/counties')
         .then(response => {
           if (!response.ok) throw new Error('Failed to fetch counties');
           return response.json();
@@ -82,7 +83,7 @@ function WVMap() {
     if (showTroutStreams && !troutStreamsData) {
       setLoading(prev => ({ ...prev, troutStreams: true }));
       
-      fetch('http://localhost:3000/layers/trout-streams')
+      fetch(process.env.REACT_APP_BACKEND_URL + '/layers/trout-streams')
         .then(response => {
           if (!response.ok) throw new Error('Failed to fetch trout streams');
           return response.json();

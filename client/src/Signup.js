@@ -2,6 +2,7 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 
+const dotenv = require('dotenv').config({path: '.env'});
 /*
   Component: Signup
   Description:
@@ -39,7 +40,7 @@ function Signup() {
     }
 
     // Send POST request to backend API
-    const response = await fetch('http://localhost:3000/Signup', {
+    const response = await fetch(process.env.REACT_APP_BACKEND_URL + '/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

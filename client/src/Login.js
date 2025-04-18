@@ -27,6 +27,7 @@ import React, { useState, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 
+const dotenv = require('dotenv').config({path: '.env'});
 
 function Login() {
   const {login} = useAuth();
@@ -43,7 +44,7 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch('http://localhost:3000/login', {
+    const response = await fetch(process.env.REACT_APP_BACKEND_URL + '/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
