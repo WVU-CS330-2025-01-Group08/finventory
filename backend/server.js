@@ -1,4 +1,4 @@
-require('dotenv').config();
+const dotenv = require('dotenv').config({path: '.env.production'});
 const express = require('express');
 const bcrypt = require('bcrypt');
 const compression = require('compression');
@@ -11,7 +11,7 @@ const { validatePassword } = require('./validation');
 app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:3001", // Allow only frontend
+    origin: "http://localhost:" + process.env.FRONTEND_PORT, // Allow only frontend
     methods: "GET,POST",
     allowedHeaders: "Content-Type",
   })
@@ -59,7 +59,6 @@ app.post('/login', async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+app.listen(process.env.BACKEND_PORT, () => {
+  console.log(`Server running on port ${process.env.BACKEND_PORT}`);
 });
