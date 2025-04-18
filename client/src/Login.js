@@ -27,8 +27,6 @@ import React, { useState, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 
-const dotenv = require('dotenv').config({path: '.env'});
-
 function Login() {
   const {login} = useAuth();
   const [username, setUsername] = useState('');
@@ -168,7 +166,7 @@ function Login() {
       <div className="container">
         <h3>Login to Your Account</h3>
         <div className="signup-link">
-          New? <Link to="/Signup">Sign up here!</Link>
+          New? <Link to="/signup">Sign up here!</Link>
         </div>
         <form onSubmit={handleSubmit}>
           <input

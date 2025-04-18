@@ -5,7 +5,6 @@ import 'leaflet/dist/leaflet.css';
 import CountyLayer from './CountyLayer';
 import TroutStreamsLayer from './TroutStreamsLayer';
 
-const dotenv = require('dotenv').config({path: '.env'});
 // Fix Leaflet icon issues
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({

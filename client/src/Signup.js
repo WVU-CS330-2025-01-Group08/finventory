@@ -2,7 +2,6 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 
-const dotenv = require('dotenv').config({path: '.env'});
 /*
   Component: Signup
   Description:
