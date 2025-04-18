@@ -27,6 +27,7 @@ logs/
 *.env
 .env.*
 .env.*.local
+!.env.example
 
 # SQL
 *.sql
