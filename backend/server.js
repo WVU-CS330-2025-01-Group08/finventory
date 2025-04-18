@@ -8,10 +8,11 @@ const layersRouter = require('./routes/layers');
 const db = require('./db');
 const { validatePassword } = require('./validation');
 
+// Setup the server to use JSON, CORS, and compression.
 app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:" + process.env.FRONTEND_PORT, // Allow only frontend
+    origin: "http://localhost:" + process.env.FRONTEND_PORT, // Allow only frontend to communicate with the backend
     methods: "GET,POST",
     allowedHeaders: "Content-Type",
   })
@@ -19,7 +20,14 @@ app.use(
 app.use(compression()); // Enable compression for all routes
 app.use('/layers', layersRouter);
 
-// User registration route
+/**
+ * User registration route
+ * 
+ * This route allows users to register for an account.
+ * It validates the password and creates a new user in the database.
+ * 
+ * @returns {Object} - A JSON object containing a message and a redirect URL.
+ */
 app.post('/signup', async (req, res) => {
   const { username, password } = req.body;
 
@@ -39,11 +47,18 @@ app.post('/signup', async (req, res) => {
     res.json({ message: 'User registered successfully', redirectUrl: '/login' });
   } catch (error) {
     console.error('Signup error:', error);
-    res.status(500).json({ error: 'Database error' });
+    res.status(500).json({ error: 'Database error' + error});
   }
 });
 
-// Basic authentication route
+/**
+ * User login route
+ * 
+ * This route allows users to login to their account.
+ * It validates the credentials and creates a new user in the database.
+ *
+ * @returns {Object} - A JSON object containing a message and a redirect URL.
+ */
 app.post('/login', async (req, res) => {
   const { username, password } = req.body;
   try {
@@ -55,10 +70,11 @@ app.post('/login', async (req, res) => {
     res.json({ message: 'Login successful', redirectUrl: '/home' });
   } catch (error) {
     console.error('Login error:', error);
-    res.status(500).json({ error: 'Database error' });
+    res.status(500).json({ error: 'Database error' + error });
   }
 });
 
+// Start the server on the specified port.
 app.listen(process.env.BACKEND_PORT, () => {
   console.log(`Server running on port ${process.env.BACKEND_PORT}`);
 });

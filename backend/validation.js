@@ -1,3 +1,10 @@
+
+/**
+ * Password validation function.
+ * 
+ * @param {string} pw - The password to validate
+ * @returns {boolean} - True if the password is valid, false otherwise
+ */
 function validatePassword(pw) {
     const allowedSpecialChars = "!@#$%^&*"; // Define allowed special characters
 
